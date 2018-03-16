@@ -1,0 +1,114 @@
+/////////////////////////////////////////////////////////////
+
+by 侯政华 2017.10.19
+
+/////////////////////////////////////////////////////////////
+
+Kinect V2 + ROS Indigo
+*Kinect V2 只支持 Opencv2 与 USB3.0 接口
+
+/*______________________Kinect驱动安装_______________________*/
+
+**安装
+
+1. 首先git下载代码，很快下载好，放到~下面
+	
+git clone https://github.com/OpenKinect/libfreenect2.git
+
+2. 然后安装依赖项如下,最好事先编译安装好OpenCV
+
+sudo apt-get install build-essential cmake pkg-config libturbojpeg libjpeg-turbo8-dev mesa-common-dev freeglut3-dev libxrandr-dev libxi-dev
+
+3. 然后安装libusb。此处需要添加一个PPA，就是下面的第一行命令
+	
+sudo apt-add-repository ppa:floe/libusb
+sudo apt-get update
+sudo apt-get install libusb-1.0-0-dev
+
+4. 接着运行下面的命令，安装GLFW3
+	
+sudo apt-get install libglfw3-dev
+
+如果没有成功的话，使用下面的命令，来代替上面的
+	
+cd libfreenect2/depends
+sh install_ubuntu.sh
+sudo dpkg -i libglfw3*_3.0.4-1_*.deb
+
+如果还是无法安装，可以去glfw3官网下载源码安装
+
+5. 然后安装OpenCL的支持库（不打算使用GPU，这一步直接跳过没做）
+
+sudo apt-get install nvidia-modprobe opencl-headers ocl-icd-dev
+
+6. 然后安装OpenGL的支持库（不打算使用GPU，这一步直接跳过没做）
+
+sudo dpkg -i debs/libglfw3*deb; sudo apt-get install -f; sudo apt-get install libgl1-mesa-dri-lts-vivid freeglut3-dev libxrandr-dev libxi-dev
+
+7. 接着编译库
+	
+cd ..
+mkdir build && cd build
+cmake ..
+make
+sudo make install
+
+8. 设定udev rules
+
+sudo cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/
+
+**测试
+
+build文件夹下
+
+sudo chmod +x ./bin/Protonect　　
+./bin/Protonect cpu
+./bin/Protonect gl
+./bin/Protonect cl
+
+/*______________________ROS接口安装_______________________*/
+
+**安装
+
+1. 建立工作空间
+
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/  
+catkin_make  
+
+2. 接口安装
+
+cd ~/catkin_ws/src/
+git clone https://github.com/code-iai/iai_kinect2.git
+cd iai_kinect2
+rosdep install -r --from-paths .
+cd ~/catkin_ws
+catkin_make -DCMAKE_BUILD_TYPE="Release"
+rospack profile
+
+***git clone 出现问题可以下载源码安装
+***可能出现Eigen问题，可以下载源码安装到usr/local/include
+
+3. 环境变量
+
+***添加环境变量
+gedit .bashrc
+source ~/catkin_ws/devel/setup.bash
+
+**测试
+	
+ROS订阅Kinect发布图像消息
+
+roslaunch kinect2_bridge kinect2_bridge.launch
+
+可视化 然后重新开一个新的终端 
+	
+rosrun kinect2_viewer kinect2_viewer
+
+///////////////////////////////////////////////////////////
+
+http://www.cnblogs.com/hitcm/p/5118196.html
+http://blog.csdn.net/myhALAN/article/details/53039233?locationNum=10&fps=1
+http://blog.csdn.net/sunbibei/article/details/51594824
+
+

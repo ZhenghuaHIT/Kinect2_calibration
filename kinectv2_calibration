@@ -1,0 +1,42 @@
+/////////////////////////////////////////////////////////////
+
+by 侯政华 2017.10.21
+
+/////////////////////////////////////////////////////////////
+
+Kinect V2 相机内参标定
+
+使用iai_kinect2进行标定，需要在ROS环境中进行
+
+参考网站：https://github.com/code-iai/iai_kinect2/tree/master/kinect2_calibration
+
+/*______________________注意事项_______________________*/
+
+1. Kinect V2发布三个类型的Topic： hd qhd sd；每个类型分辨率不同，需要单独标定
+
+**更改类型方法
+
+在  catkin_ws/src/iai_kinect2/kinect2_calibration/src   文件夹下找到：kinect2_calibration.cpp 文件。查看该文件中1311-1313这三行命令：
+
+　　  std::string topicColor = "/" + ns + K2_TOPIC_HD + K2_TOPIC_IMAGE_MONO;
+  　　std::string topicIr = "/" + ns + K2_TOPIC_SD + K2_TOPIC_IMAGE_IR;
+ 　　 std::string topicDepth = "/" + ns + K2_TOPIC_SD + K2_TOPIC_IMAGE_DEPTH;
+
+对应，因此把  K2_TOPIC_HD  改为 K2_TOPIC_QHD 即可。保存。然后重新编译：
+　　cd ~/catkin_ws      （进入自己路径下的catkin_ws文件夹）
+　　catkin_make -DCMAKE_BUILD_TYPE="Release"
+　　rospack profile
+
+2. 标定过程中要尽可能多的采集各个方向的图片，至少有两个距离的图像
+
+3. 需要将标定结果，四个yaml文件（calib_color.yaml/calib_ir.yaml/calib_depth.yaml/calib_pose.yaml）
+   保存到 home/hou/catkin_ws/src/iai_kinect2/kinect2_bridge/data/021335743547 中
+
+4. 021335743547为相机编号，可在标定过程record的终端中找到
+
+
+/*______________________Kinect2说明_______________________*/
+
+Kinect v2预览版的Depth传感器的分辨率也提高到 512×424，而Kinect v1是可以取640×480分辨率的Depth数据，乍一看规格好像下降了，其实Kinect v1的Depth传感器的物理分辨率是320x240，Up Sacling到640x480而已（注：猜测是Runtime处理的）。另外，Depth传感器的方式也是从Light Coding变更为Time of Flight(TOF)。
+
+Kinect v2虽然有hd qhd sd三种类型，但只是color camera分辨率有变化，depth camera 的分辨率只有 512*424，在ROS中发布的如/kinect2/hd/image_depth_rect，都是经过sd缩放过的，因为分辨率不同，可以看到hd的depth图中两侧缺少深度数据，因为sd深度图中无法提供数据
