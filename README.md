@@ -3,9 +3,9 @@ Some Kinect camera calibration files and results, Kinect2 driver installation tu
 
 **Authors**: Zhenghua.Hou HIT 16S108281
 
-**2017.11.20**: Finish calibration of Kinect2.
+**2017.11.20**: Finish calibration of Kinect v2.
 
-**2017.11.25**: calibration of Kinect1 and files.
+**2017.11.25**: calibration of Kinect v1 and files.
 
 # 1. License
 Only Myself and My junior of laboratory.
