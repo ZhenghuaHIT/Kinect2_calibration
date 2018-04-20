@@ -17,13 +17,13 @@ Only Myself and My junior of laboratory.
 
 # 3. Result
 **X axis:**  
-![](http://i2.bvimg.com/641465/47ac0cbc450d64ca.png)  
+![](https://github.com/ZhenghuaHIT/Kinect2_calibration/raw/master/images/c1.png)  
 
 **Y axis:**  
-![](http://i2.bvimg.com/641465/e62c26da35dc9080.png)  
+![](https://github.com/ZhenghuaHIT/Kinect2_calibration/raw/master/images/c2.png)  
 
 **X-Y 2D:**  
-![](http://i2.bvimg.com/641465/206841abb6239a98.png)  
+![](https://github.com/ZhenghuaHIT/Kinect2_calibration/raw/master/images/c3.png)  
 
 **X-Y 3D:**  
-![](http://i2.bvimg.com/641465/bd0b9361b1c3727c.png)  
+![](https://github.com/ZhenghuaHIT/Kinect2_calibration/raw/master/images/c4.png)  
