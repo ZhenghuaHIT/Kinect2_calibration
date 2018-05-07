@@ -8,7 +8,7 @@ Some Kinect camera calibration files and results, Kinect2 driver installation tu
 **2017.11.25**: calibration of Kinect v1 and files. 
 
 # 1. License
-Only Myself and My junior of laboratory.
+Only Myself and My junior of laboratory. 
 
 # 2. Usage
 **kinectv2_tutorial** documents how to install the Kinect2 driver and use it under Ubuntu.  
